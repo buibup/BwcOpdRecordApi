@@ -59,16 +59,31 @@ namespace BwcOpdRecordApi.Data.Services
                     QExercise = item.QExercise,
                 };
 
+               var isHistory = history.GetType().GetProperties()
+                        .Where(h => h.GetValue(history) is string)
+                        .Select(h => (string)h.GetValue(history))
+                        .Any(value => !String.IsNullOrEmpty(value));
+
                 var genetic = new Genetic()
                 {
                     QGenetic = item.QGenetic
                 };
+
+                var isGenetic = genetic.GetType().GetProperties()
+                    .Where(g => g.GetValue(genetic) is string)
+                    .Select(g => (string)g.GetValue(genetic))
+                    .Any(value => !String.IsNullOrEmpty(value));
 
                 var familyHistory = new FamilyHistory()
                 {
                     QFamilyFather = item.QFamilyFather,
                     QFamilyMother = item.QFamilyMother
                 };
+
+                var isFamilyHistory = familyHistory.GetType().GetProperties()
+                    .Where(f => f.GetValue(familyHistory) is string)
+                    .Select(f => (string)f.GetValue(familyHistory))
+                    .Any(value => !String.IsNullOrEmpty(value));
 
                 var physicalExamination = new PhysicalExamination()
                 {
@@ -88,6 +103,11 @@ namespace BwcOpdRecordApi.Data.Services
                     QRespiratoryPEText = item.QRespiratoryPEText
                 };
 
+                var isPhysicalExamination = physicalExamination.GetType().GetProperties()
+                    .Where(p => p.GetValue(physicalExamination) is string)
+                    .Select(p => (string)p.GetValue(physicalExamination))
+                    .Any(value => !String.IsNullOrEmpty(value));
+
                 var specialNote = new SpecialNote()
                 {
                     QSpecialNote = item.QSpecialNote
@@ -101,9 +121,13 @@ namespace BwcOpdRecordApi.Data.Services
                     QUESDate = item.QUESDate,
                     QUESTime = item.QUESTime,
                     History = history,
+                    IsHistory = isHistory,
                     Genetic = genetic,
+                    IsGenetic = isGenetic,
                     FamilyHistory = familyHistory,
+                    IsFamilyHistory = isFamilyHistory,
                     PhysicalExamination = physicalExamination,
+                    IsPhysicalExamination = isFamilyHistory,
                     SpecialNote = specialNote,
                     QDoctor = item.QDoctor,
                     QUESUserDR = item.QUESUserDR

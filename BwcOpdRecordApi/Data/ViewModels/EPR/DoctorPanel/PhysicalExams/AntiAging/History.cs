@@ -25,7 +25,7 @@ namespace BwcOpdRecordApi.Data.ViewModels.EPR.DoctorPanel.PhysicalExams.AntiAgin
         [JsonProperty(PropertyName = "Sleep")]
         public string QSleep { get; set; }
         [JsonProperty(PropertyName = "SleepHours")]
-        public decimal QSleepHours { get; set; }
+        public decimal? QSleepHours { get; set; }
         [JsonProperty(PropertyName = "SleepOther")]
         public string QSleepText { get; set; }
         [JsonProperty(PropertyName = "Skin")]
