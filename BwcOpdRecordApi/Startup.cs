@@ -45,6 +45,8 @@ namespace BwcOpdRecordApi
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddCors();
+
+            services.AddSwaggerDocumentation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +55,7 @@ namespace BwcOpdRecordApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwaggerDocumentation();
             }
             else
             {
