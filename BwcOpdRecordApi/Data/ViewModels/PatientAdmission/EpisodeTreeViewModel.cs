@@ -1,4 +1,5 @@
 ﻿using BwcOpdRecordApi.Data.ViewModels.EPR.DoctorPanel;
+using BwcOpdRecordApi.Data.ViewModels.EPR.ScanDocuments;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,9 @@ namespace BwcOpdRecordApi.Data.ViewModels.PatientAdmission
 
         [JsonProperty(PropertyName = "DoctorPanel")]
         public DoctorPanelViewModel DoctorPanel { get; set; }
+
+        [JsonProperty(PropertyName = "Documents")]
+        public List<DocumentViewModel> Documents { get; set; }
 
         [JsonProperty(PropertyName = "VisitType")]
         public string VisitType

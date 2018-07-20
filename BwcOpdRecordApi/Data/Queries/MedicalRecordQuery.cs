@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BwcOpdRecordApi.Data.Queries
 {
-    public class MedicalRecord
+    public class MedicalRecordQuery
     {
         public static string GetDocumentsByPapmiRowId()
         {
@@ -41,7 +41,7 @@ namespace BwcOpdRecordApi.Data.Queries
                 ORDER BY MR_Pictures->PIC_DateCreated DESC, MR_Pictures->PIC_TimeCreated DESC";
         }
 
-        public static string GetBinaryDocumentByPapmiNoAndPath()
+        public static string GetDocumentBinaryByPapmiNoAndPath()
         {
             return @"
                 SELECT
