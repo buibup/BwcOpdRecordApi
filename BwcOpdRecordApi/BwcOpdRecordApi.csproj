@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Data\ViewModels\EPR\ScanDocuments\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
