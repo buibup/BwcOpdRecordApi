@@ -21,6 +21,7 @@ namespace BwcOpdRecordApi.Controllers
         private readonly ITreatmentService _treatmentService;
         private readonly IEprService _eprService;
         private readonly IPatientInfoService _patientInfoService;
+        private readonly IMedicalRecordService _medicalRecordService;
 
         public OpdRecordController(
             IVitalSignsService vitalSignsService,
@@ -29,7 +30,8 @@ namespace BwcOpdRecordApi.Controllers
             IExerciseService exerciseService,
             ITreatmentService treatmentService,
             IEprService eprService,
-            IPatientInfoService patientInfoService)
+            IPatientInfoService patientInfoService,
+            IMedicalRecordService medicalRecordService)
         {
             _vitalSignsService = vitalSignsService;
             _physicalExamService = physicalExamService;
@@ -38,6 +40,7 @@ namespace BwcOpdRecordApi.Controllers
             _treatmentService = treatmentService;
             _eprService = eprService;
             _patientInfoService = patientInfoService;
+            _medicalRecordService = medicalRecordService;
         }
 
         [HttpGet("GetVitalSignsByEpiNo/{epiNo}")]
@@ -132,6 +135,12 @@ namespace BwcOpdRecordApi.Controllers
             if (result == null) return NotFound();
 
             return Ok(result);
+        }
+
+        [HttpGet("GetDocument/{papmiNo}/{path}")]
+        public async Task<IActionResult> GetDocumentBinaryByPapmiNoAndPathAsync(string papmiNo, string path)
+        {
+            return await _medicalRecordService.GetDocumentBinaryByPapmiNoAndPathAsync(papmiNo, path);
         }
     }
 }

@@ -42,6 +42,7 @@ namespace BwcOpdRecordApi
             services.AddTransient<ITreatmentService, TreatmentService>();
             services.AddTransient<IEprService, EprService>();
             services.AddTransient<IPatientInfoService, PatientInfoService>();
+            services.AddTransient<IMedicalRecordService, MedicalRecordService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
