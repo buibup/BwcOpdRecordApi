@@ -13,12 +13,16 @@ namespace BwcOpdRecordApi.Data.Services
     {
         private readonly IPatientAdmissionRepository _patientAdmissionRepository;
         private readonly IEprService _eprService;
+        private readonly IMedicalRecordRepository _medicalRecordRepository;
+
         public PatientInfoService(
             IPatientAdmissionRepository patientAdmissionRepository,
-            IEprService eprService)
+            IEprService eprService,
+            IMedicalRecordRepository medicalRecordRepository)
         {
             _patientAdmissionRepository = patientAdmissionRepository;
             _eprService = eprService;
+            _medicalRecordRepository = medicalRecordRepository;
         }
 
         public async Task<PatientInfoViewModel> GetPatientInfoByPapmiNoAsync(string papmiNo, DoctorPanelEnum doctorPanelEnum)
@@ -55,6 +59,8 @@ namespace BwcOpdRecordApi.Data.Services
                     doctorPanel = await _eprService.GetDoctorPanelByEpiRowIdAsync(item.PAADM_RowID);
                 }
 
+                var documents = await _medicalRecordRepository.GetDocumentsByEpiRowIdAsync(item.PAADM_RowID);
+
                 var episodeTree = new EpisodeTreeViewModel()
                 {
                     PAADM_RowID = item.PAADM_RowID,
@@ -68,7 +74,8 @@ namespace BwcOpdRecordApi.Data.Services
                     PAADM_DischgDate = item.PAADM_DischgDate,
                     PAADM_DischgTime = item.PAADM_DischgTime,
                     PAADM_Remark = item.PAADM_Remark,
-                    DoctorPanel = doctorPanel
+                    DoctorPanel = doctorPanel,
+                    Documents = documents.ToList()
                 };
 
                 episodes.Add(episodeTree);

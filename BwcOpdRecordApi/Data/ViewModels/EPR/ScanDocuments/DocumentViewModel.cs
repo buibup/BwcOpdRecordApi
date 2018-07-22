@@ -12,7 +12,7 @@ namespace BwcOpdRecordApi.Data.ViewModels.EPR.ScanDocuments
         public DateTime? PIC_DateCreated { get; set; }
 
         [JsonProperty(PropertyName = "TimeCreated")]
-        public DateTime? PIC_TimeCreated { get; set; }
+        public TimeSpan? PIC_TimeCreated { get; set; }
 
         [JsonProperty(PropertyName = "SADST_Code")]
         public string SADST_Code { get; set; }

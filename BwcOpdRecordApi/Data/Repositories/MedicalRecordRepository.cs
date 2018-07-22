@@ -19,7 +19,7 @@ namespace BwcOpdRecordApi.Data.Repositories
         }
         public async Task<DocumentBinary> GetDocumentBinaryByPapmiNoAndPathAsync(string papmiNo, string path)
         {
-            using(var connection = new OdbcConnection(_connectionStrings.Cache))
+            using (var connection = new OdbcConnection(_connectionStrings.Cache))
             {
                 var result = await connection.QueryFirstOrDefaultAsync<DocumentBinary>(MedicalRecordQuery.GetDocumentBinaryByPapmiNoAndPath(), new { PAPMI_No = papmiNo, PIC_Path = path });
 
@@ -27,11 +27,11 @@ namespace BwcOpdRecordApi.Data.Repositories
             }
         }
 
-        public async Task<IEnumerable<DocumentViewModel>> GetDocumentsByEpiRowIdAsync(long papmiRowId)
+        public async Task<IEnumerable<DocumentViewModel>> GetDocumentsByEpiRowIdAsync(long epiRowId)
         {
-            using(var connection = new OdbcConnection(_connectionStrings.Cache))
+            using (var connection = new OdbcConnection(_connectionStrings.Cache))
             {
-                var result = await connection.QueryAsync<DocumentViewModel>(MedicalRecordQuery.GetDocumentsByEpiRowId(), new { PAADM_RowID = papmiRowId });
+                var result = await connection.QueryAsync<DocumentViewModel>(MedicalRecordQuery.GetDocumentsByEpiRowId(), new { PAADM_RowID = epiRowId });
 
                 return result;
             }
