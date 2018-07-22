@@ -137,6 +137,7 @@ namespace BwcOpdRecordApi.Controllers
             return Ok(result);
         }
 
+        [ResponseCache(Duration = 300)]
         [HttpGet("GetDocument/{papmiNo}/{path}")]
         public async Task<IActionResult> GetDocumentBinaryByPapmiNoAndPathAsync(string papmiNo, string path)
         {
