@@ -41,7 +41,7 @@ namespace BwcOpdRecordApi.Data.Repositories
         {
             using (var connection = new OdbcConnection(_connectionStrings.Cache))
             {
-                var result = await connection.QueryAsync<DocumentViewModel>(MedicalRecordQuery.GetDocumentsByEpiRowId(), new { PAPMI_RowId1 = papmiRowId });
+                var result = await connection.QueryAsync<DocumentViewModel>(MedicalRecordQuery.GetDocumentsByPapmiRowId(), new { PAPMI_RowId1 = papmiRowId });
 
                 return result;
             }

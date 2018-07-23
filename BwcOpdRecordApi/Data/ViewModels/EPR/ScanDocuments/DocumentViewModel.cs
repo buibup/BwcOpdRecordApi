@@ -8,6 +8,18 @@ namespace BwcOpdRecordApi.Data.ViewModels.EPR.ScanDocuments
 {
     public class DocumentViewModel
     {
+        [JsonIgnore]
+        [JsonProperty(PropertyName = "PAPMI_No")]
+        public string PAPMI_No { get; set; }
+
+        [JsonIgnore]
+        [JsonProperty(PropertyName = "PAADM_RowID")]
+        public long PAADM_RowID { get; set; }
+
+        [JsonIgnore]
+        [JsonProperty(PropertyName = "PAADM_ADMNo")]
+        public string PAADM_ADMNo { get; set; }
+
         [JsonProperty(PropertyName = "DateCreated")]
         public DateTime? PIC_DateCreated { get; set; }
 

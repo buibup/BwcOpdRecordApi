@@ -11,6 +11,9 @@ namespace BwcOpdRecordApi.Data.Queries
         {
             return @"
                 SELECT 
+                    MRADM_ADM_DR->PAADM_PAPMI_DR->PAPMI_No,
+                    MRADM_ADM_DR->PAADM_RowID,
+                    MRADM_ADM_DR->PAADM_ADMNo,
 	                MR_Pictures->PIC_DateCreated, 
 	                MR_Pictures->PIC_TimeCreated,
 	                MR_Pictures->PIC_DocSubType_DR->SADST_Code, 
@@ -28,6 +31,9 @@ namespace BwcOpdRecordApi.Data.Queries
         {
             return @"
                 SELECT 
+                    MRADM_ADM_DR->PAADM_PAPMI_DR->PAPMI_No,
+                    MRADM_ADM_DR->PAADM_RowID,
+                    MRADM_ADM_DR->PAADM_ADMNo,
 	                MR_Pictures->PIC_DateCreated, 
 	                MR_Pictures->PIC_TimeCreated,
 	                MR_Pictures->PIC_DocSubType_DR->SADST_Code, 
