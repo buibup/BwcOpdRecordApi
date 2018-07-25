@@ -8,8 +8,8 @@ namespace BwcOpdRecordApi.Data.Interfaces.Repositories
 {
     public interface IMedicalRecordRepository
     {
-        Task<IEnumerable<DocumentViewModel>> GetDocumentsByPapmiRowIdAsync(long papmiRowId);
-        Task<IEnumerable<DocumentViewModel>> GetDocumentsByEpiRowIdAsync(long epiRowId);
+        Task<IEnumerable<Document>> GetDocumentsByPapmiRowIdAsync(long papmiRowId);
+        Task<IEnumerable<Document>> GetDocumentsByEpiRowIdAsync(long epiRowId);
         Task<DocumentBinary> GetDocumentBinaryByPapmiNoAndPathAsync(string papmiNo, string path);
     }
 }

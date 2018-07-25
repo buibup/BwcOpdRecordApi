@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace BwcOpdRecordApi.Data.ViewModels.EPR.ScanDocuments
 {
-    public class DocumentViewModel
+    public class Doctor
     {
-        public List<Doctor> Doctors { get; set; }
-        public List<DocumentType> DocumentTypes { get; set; }
+        public string Name { get; set; }
         public List<Document> Documents { get; set; }
     }
 }

@@ -46,8 +46,11 @@ namespace BwcOpdRecordApi.Data.ViewModels.PatientAdmission
         [JsonProperty(PropertyName = "DoctorPanel")]
         public DoctorPanelViewModel DoctorPanel { get; set; }
 
+        [JsonIgnore]
         [JsonProperty(PropertyName = "Documents")]
-        public List<DocumentViewModel> Documents { get; set; }
+        public List<Document> Documents { get; set; }
+
+        public List<DocumentViewModel> DocumentFilter { get; set; }
 
         [JsonProperty(PropertyName = "VisitType")]
         public string VisitType

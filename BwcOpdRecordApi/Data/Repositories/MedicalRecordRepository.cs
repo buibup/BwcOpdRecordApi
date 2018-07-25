@@ -27,21 +27,21 @@ namespace BwcOpdRecordApi.Data.Repositories
             }
         }
 
-        public async Task<IEnumerable<DocumentViewModel>> GetDocumentsByEpiRowIdAsync(long epiRowId)
+        public async Task<IEnumerable<Document>> GetDocumentsByEpiRowIdAsync(long epiRowId)
         {
             using (var connection = new OdbcConnection(_connectionStrings.Cache))
             {
-                var result = await connection.QueryAsync<DocumentViewModel>(MedicalRecordQuery.GetDocumentsByEpiRowId(), new { PAADM_RowID = epiRowId });
+                var result = await connection.QueryAsync<Document>(MedicalRecordQuery.GetDocumentsByEpiRowId(), new { PAADM_RowID = epiRowId });
 
                 return result;
             }
         }
 
-        public async Task<IEnumerable<DocumentViewModel>> GetDocumentsByPapmiRowIdAsync(long papmiRowId)
+        public async Task<IEnumerable<Document>> GetDocumentsByPapmiRowIdAsync(long papmiRowId)
         {
             using (var connection = new OdbcConnection(_connectionStrings.Cache))
             {
-                var result = await connection.QueryAsync<DocumentViewModel>(MedicalRecordQuery.GetDocumentsByPapmiRowId(), new { PAPMI_RowId1 = papmiRowId });
+                var result = await connection.QueryAsync<Document>(MedicalRecordQuery.GetDocumentsByPapmiRowId(), new { PAPMI_RowId1 = papmiRowId });
 
                 return result;
             }

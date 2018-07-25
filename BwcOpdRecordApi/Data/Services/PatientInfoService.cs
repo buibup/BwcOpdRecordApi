@@ -14,15 +14,18 @@ namespace BwcOpdRecordApi.Data.Services
         private readonly IPatientAdmissionRepository _patientAdmissionRepository;
         private readonly IEprService _eprService;
         private readonly IMedicalRecordRepository _medicalRecordRepository;
+        private readonly ICodeTablesRepository _codeTablesRepository;
 
         public PatientInfoService(
             IPatientAdmissionRepository patientAdmissionRepository,
             IEprService eprService,
-            IMedicalRecordRepository medicalRecordRepository)
+            IMedicalRecordRepository medicalRecordRepository,
+            ICodeTablesRepository codeTablesRepository)
         {
             _patientAdmissionRepository = patientAdmissionRepository;
             _eprService = eprService;
             _medicalRecordRepository = medicalRecordRepository;
+            _codeTablesRepository = codeTablesRepository;
         }
 
         public async Task<PatientInfoViewModel> GetPatientInfoByPapmiNoAsync(string papmiNo, DoctorPanelEnum doctorPanelEnum)
@@ -61,6 +64,9 @@ namespace BwcOpdRecordApi.Data.Services
                 }
 
                 var documentsEpi = scanDocuments.Where(d => d.PAADM_RowID == item.PAADM_RowID).ToList();
+                var doucments = "";
+                var doctorDocs = "";
+                var documentTyoeDocs = "";
 
                 var episodeTree = new EpisodeTreeViewModel()
                 {

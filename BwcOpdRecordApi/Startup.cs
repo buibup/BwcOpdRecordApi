@@ -33,6 +33,7 @@ namespace BwcOpdRecordApi
             services.AddTransient<IQuestionnaireRepository, QuestionnaireRepository>();
             services.AddTransient<IPatientAdmissionRepository, PatientAdmissionRepository>();
             services.AddTransient<IMedicalRecordRepository, MedicalRecordRepository>();
+            services.AddTransient<ICodeTablesRepository, CodeTablesRepository>();
 
             // services
             services.AddTransient<IVitalSignsService, VitalSignsService>();

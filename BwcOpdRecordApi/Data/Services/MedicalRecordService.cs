@@ -1,5 +1,6 @@
 ﻿using BwcOpdRecordApi.Data.Interfaces.Repositories;
 using BwcOpdRecordApi.Data.Interfaces.Services;
+using BwcOpdRecordApi.Data.ViewModels.EPR.ScanDocuments;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,14 @@ namespace BwcOpdRecordApi.Data.Services
     public class MedicalRecordService : IMedicalRecordService
     {
         private readonly IMedicalRecordRepository _medicalRecordRepository;
-        public MedicalRecordService(IMedicalRecordRepository medicalRecordRepository)
+        private readonly ICodeTablesRepository _codeTablesRepository;
+        public MedicalRecordService(IMedicalRecordRepository medicalRecordRepository,
+            ICodeTablesRepository codeTablesRepository)
         {
             _medicalRecordRepository = medicalRecordRepository;
+            _codeTablesRepository = codeTablesRepository;
         }
+
         public async Task<FileStreamResult> GetDocumentBinaryByPapmiNoAndPathAsync(string papmiNo, string path)
         {
             var data = await _medicalRecordRepository.GetDocumentBinaryByPapmiNoAndPathAsync(papmiNo, path);
@@ -23,6 +28,15 @@ namespace BwcOpdRecordApi.Data.Services
 
             Stream stream = new MemoryStream(data.DocData);
             return new FileStreamResult(stream, contentType);
+        }
+
+        public async Task<IEnumerable<DocumentViewModel>> GetDocumentsVMByPapmiRowIdAsync(long papmiRowId)
+        {
+            var result = new List<DocumentViewModel>();
+
+            var documets = await _medicalRecordRepository.GetDocumentsByPapmiRowIdAsync(papmiRowId);
+
+            return result;
         }
     }
 }
