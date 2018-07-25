@@ -36,6 +36,8 @@ namespace BwcOpdRecordApi.Data.Services
 
             var documets = await _medicalRecordRepository.GetDocumentsByPapmiRowIdAsync(papmiRowId);
 
+            var doctors = documets.ToList().GetFilterDoctor();
+
             return result;
         }
     }
