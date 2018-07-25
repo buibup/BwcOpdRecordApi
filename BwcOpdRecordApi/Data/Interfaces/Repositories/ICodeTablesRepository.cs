@@ -7,6 +7,6 @@ namespace BwcOpdRecordApi.Data.Interfaces.Repositories
 {
     public interface ICodeTablesRepository
     {
-        Task<bool> IsDoctorAsync(string cTPCP_Code);
+        bool IsDoctor(string cTPCP_Code);
     }
 }

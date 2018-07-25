@@ -50,7 +50,8 @@ namespace BwcOpdRecordApi.Data.ViewModels.PatientAdmission
         [JsonProperty(PropertyName = "Documents")]
         public List<Document> Documents { get; set; }
 
-        public List<DocumentViewModel> DocumentFilter { get; set; }
+        [JsonProperty(PropertyName = "DocumentsFilter")]
+        public List<DocumentViewModel> DocumentsFilter { get; set; }
 
         [JsonProperty(PropertyName = "VisitType")]
         public string VisitType

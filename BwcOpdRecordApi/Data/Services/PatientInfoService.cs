@@ -15,17 +15,20 @@ namespace BwcOpdRecordApi.Data.Services
         private readonly IEprService _eprService;
         private readonly IMedicalRecordRepository _medicalRecordRepository;
         private readonly ICodeTablesRepository _codeTablesRepository;
+        private readonly IMedicalRecordService _medicalRecordService;
 
         public PatientInfoService(
             IPatientAdmissionRepository patientAdmissionRepository,
             IEprService eprService,
             IMedicalRecordRepository medicalRecordRepository,
-            ICodeTablesRepository codeTablesRepository)
+            ICodeTablesRepository codeTablesRepository,
+            IMedicalRecordService medicalRecordService)
         {
             _patientAdmissionRepository = patientAdmissionRepository;
             _eprService = eprService;
             _medicalRecordRepository = medicalRecordRepository;
             _codeTablesRepository = codeTablesRepository;
+            _medicalRecordService = medicalRecordService;
         }
 
         public async Task<PatientInfoViewModel> GetPatientInfoByPapmiNoAsync(string papmiNo, DoctorPanelEnum doctorPanelEnum)
@@ -37,6 +40,7 @@ namespace BwcOpdRecordApi.Data.Services
             var person = await _patientAdmissionRepository.GetPersonByPapmiRowIdAsync(patient.PAPMI_RowId1);
             var ptAdms = await _patientAdmissionRepository.GetPatientAdmissionsByPapmiRowIdAsync(patient.PAPMI_RowId1);
             var scanDocuments = await _medicalRecordRepository.GetDocumentsByPapmiRowIdAsync(patient.PAPMI_RowId1);
+            var doucmentsFilter = await _medicalRecordService.GetDocumentsVMByPapmiRowIdAsync(patient.PAPMI_RowId1);
 
             var patientInfo = new PatientInfo()
             {
@@ -63,10 +67,8 @@ namespace BwcOpdRecordApi.Data.Services
                     doctorPanel = await _eprService.GetDoctorPanelByEpiRowIdAsync(item.PAADM_RowID);
                 }
 
-                var documentsEpi = scanDocuments.Where(d => d.PAADM_RowID == item.PAADM_RowID).ToList();
-                var doucments = "";
-                var doctorDocs = "";
-                var documentTyoeDocs = "";
+                // var documentsEpi = scanDocuments.Where(d => d.PAADM_RowID == item.PAADM_RowID).ToList();
+                var doucmentsFilterEpi = doucmentsFilter.Where(d => d.PAADM_ADMNo == item.PAADM_ADMNo).ToList();
 
                 var episodeTree = new EpisodeTreeViewModel()
                 {
@@ -82,7 +84,8 @@ namespace BwcOpdRecordApi.Data.Services
                     PAADM_DischgTime = item.PAADM_DischgTime,
                     PAADM_Remark = item.PAADM_Remark,
                     DoctorPanel = doctorPanel,
-                    Documents = documentsEpi
+                    // Documents = documentsEpi,
+                    DocumentsFilter = doucmentsFilterEpi
                 };
 
                 episodes.Add(episodeTree);

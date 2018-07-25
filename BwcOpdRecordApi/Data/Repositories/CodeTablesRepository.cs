@@ -17,11 +17,11 @@ namespace BwcOpdRecordApi.Data.Repositories
             _connectionStrings = connectionStrings;
         }
 
-        public async Task<bool> IsDoctorAsync(string cTPCP_Code)
+        public bool IsDoctor(string cTPCP_Code)
         {
             using(var connection = new OdbcConnection(_connectionStrings.Cache))
             {
-                var result = await connection.ExecuteAsync(CodeTablesQuery.IsDoctor(), new { CTPCP_Code = cTPCP_Code });
+                var result = connection.Query<int>(CodeTablesQuery.IsDoctor(), new { CTPCP_Code = cTPCP_Code }).FirstOrDefault();
 
                 return result == 1 ? true : false;
             }
