@@ -21,13 +21,30 @@ namespace BwcOpdRecordApi.Data.Services
             _codeTablesRepository = codeTablesRepository;
         }
 
-        public async Task<FileStreamResult> GetDocumentBinaryByPapmiNoAndPathAsync(string papmiNo, string path)
+        public async Task<DocumentResult> GetDocumentBinaryByPapmiNoAndPathAsync(string papmiNo, string path, bool isFileStreamResult)
         {
-            var data = await _medicalRecordRepository.GetDocumentBinaryByPapmiNoAndPathAsync(papmiNo, path);
+            var data = await _medicalRecordRepository.GetDocumentBinaryByPapmiNoAndPathAsync(papmiNo, path, isFileStreamResult);
             string contentType = data.DocType.GetContentTypeByDocType();
 
+            if(!isFileStreamResult)
+            {
+                return new DocumentResult()
+                {
+                    ContentType = contentType,
+                    FileStreamResult = null
+                };
+            }
+
             Stream stream = new MemoryStream(data.DocData);
-            return new FileStreamResult(stream, contentType);
+            var fileStreamResult = new FileStreamResult(stream, contentType);
+
+            var result = new DocumentResult()
+            {
+                ContentType = contentType,
+                FileStreamResult = fileStreamResult
+            };
+
+            return result;
         }
 
         public async Task<IEnumerable<DocumentViewModel>> GetDocumentsVMByPapmiRowIdAsync(long papmiRowId)

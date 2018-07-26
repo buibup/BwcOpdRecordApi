@@ -39,7 +39,7 @@ namespace BwcOpdRecordApi.Data.Services
 
             var person = await _patientAdmissionRepository.GetPersonByPapmiRowIdAsync(patient.PAPMI_RowId1);
             var ptAdms = await _patientAdmissionRepository.GetPatientAdmissionsByPapmiRowIdAsync(patient.PAPMI_RowId1);
-            var scanDocuments = await _medicalRecordRepository.GetDocumentsByPapmiRowIdAsync(patient.PAPMI_RowId1);
+            // var scanDocuments = await _medicalRecordRepository.GetDocumentsByPapmiRowIdAsync(patient.PAPMI_RowId1);
             var doucmentsFilter = await _medicalRecordService.GetDocumentsVMByPapmiRowIdAsync(patient.PAPMI_RowId1);
 
             var patientInfo = new PatientInfo()

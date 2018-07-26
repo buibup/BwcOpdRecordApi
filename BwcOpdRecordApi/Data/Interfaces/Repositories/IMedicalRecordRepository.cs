@@ -10,6 +10,6 @@ namespace BwcOpdRecordApi.Data.Interfaces.Repositories
     {
         Task<IEnumerable<Document>> GetDocumentsByPapmiRowIdAsync(long papmiRowId);
         Task<IEnumerable<Document>> GetDocumentsByEpiRowIdAsync(long epiRowId);
-        Task<DocumentBinary> GetDocumentBinaryByPapmiNoAndPathAsync(string papmiNo, string path);
+        Task<DocumentBinary> GetDocumentBinaryByPapmiNoAndPathAsync(string papmiNo, string path, bool isDocData);
     }
 }

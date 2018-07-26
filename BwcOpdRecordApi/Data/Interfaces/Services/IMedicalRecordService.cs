@@ -10,7 +10,7 @@ namespace BwcOpdRecordApi.Data.Interfaces.Services
 {
     public interface IMedicalRecordService
     {
-        Task<FileStreamResult> GetDocumentBinaryByPapmiNoAndPathAsync(string papmiNo, string path);
+        Task<DocumentResult> GetDocumentBinaryByPapmiNoAndPathAsync(string papmiNo, string path, bool isFileStreamResult);
         Task<IEnumerable<DocumentViewModel>> GetDocumentsVMByPapmiRowIdAsync(long papmiRowId);
     }
 }

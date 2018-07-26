@@ -139,9 +139,21 @@ namespace BwcOpdRecordApi.Controllers
 
         [ResponseCache(Duration = 300)]
         [HttpGet("GetDocument/{papmiNo}/{path}")]
-        public async Task<IActionResult> GetDocumentBinaryByPapmiNoAndPathAsync(string papmiNo, string path)
+        public async Task<IActionResult> GetDocumentFileStreamResultByPapmiNoAndPathAsync(string papmiNo, string path)
         {
-            return await _medicalRecordService.GetDocumentBinaryByPapmiNoAndPathAsync(papmiNo, path);
+            var data = await _medicalRecordService.GetDocumentBinaryByPapmiNoAndPathAsync(papmiNo, path, true);
+            return data.FileStreamResult;
+        }
+
+        [ResponseCache(Duration = 300)]
+        [HttpGet("GetDocumentContentType/{papmiNo}/{path}")]
+        public async Task<IActionResult> GetDocumentContentTypeByPapmiNoAndPathAsync(string papmiNo, string path)
+        {
+            var data = await _medicalRecordService.GetDocumentBinaryByPapmiNoAndPathAsync(papmiNo, path, false);
+
+            if(data == null) { return NotFound(); }
+
+            return Ok(data.ContentType);
         }
     }
 }

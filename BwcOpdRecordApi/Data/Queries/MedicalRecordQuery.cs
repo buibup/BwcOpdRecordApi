@@ -47,11 +47,21 @@ namespace BwcOpdRecordApi.Data.Queries
                 ORDER BY MR_Pictures->PIC_DateCreated DESC, MR_Pictures->PIC_TimeCreated DESC";
         }
 
-        public static string GetDocumentBinaryByPapmiNoAndPath()
+        public static string GetDocumentByPapmiNoAndPath()
         {
             return @"
                 SELECT
 	                MR_Pictures->PIC_websysDocument->docData DocData,
+	                MR_Pictures->PIC_websysDocument->docType DocType
+                FROM MR_Adm
+                WHERE MRADM_ADM_DR->PAADM_PAPMI_DR->PAPMI_No = ?
+                AND MR_Pictures->PIC_Path = ? ";
+        }
+
+        public static string GetDocumentTypeByPapmiNoAndPath()
+        {
+            return @"
+                SELECT
 	                MR_Pictures->PIC_websysDocument->docType DocType
                 FROM MR_Adm
                 WHERE MRADM_ADM_DR->PAADM_PAPMI_DR->PAPMI_No = ?

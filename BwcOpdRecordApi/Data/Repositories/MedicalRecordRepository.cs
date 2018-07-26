@@ -17,11 +17,13 @@ namespace BwcOpdRecordApi.Data.Repositories
         {
             _connectionStrings = connectionStrings;
         }
-        public async Task<DocumentBinary> GetDocumentBinaryByPapmiNoAndPathAsync(string papmiNo, string path)
+        public async Task<DocumentBinary> GetDocumentBinaryByPapmiNoAndPathAsync(string papmiNo, string path, bool isDocData)
         {
+            var query = isDocData ? MedicalRecordQuery.GetDocumentByPapmiNoAndPath() : MedicalRecordQuery.GetDocumentTypeByPapmiNoAndPath();
+
             using (var connection = new OdbcConnection(_connectionStrings.Cache))
             {
-                var result = await connection.QueryFirstOrDefaultAsync<DocumentBinary>(MedicalRecordQuery.GetDocumentBinaryByPapmiNoAndPath(), new { PAPMI_No = papmiNo, PIC_Path = path });
+                var result = await connection.QueryFirstOrDefaultAsync<DocumentBinary>(query, new { PAPMI_No = papmiNo, PIC_Path = path });
 
                 return result;
             }
