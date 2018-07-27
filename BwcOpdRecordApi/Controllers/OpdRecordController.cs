@@ -145,7 +145,6 @@ namespace BwcOpdRecordApi.Controllers
             return data.FileStreamResult;
         }
 
-        [ResponseCache(Duration = 300)]
         [HttpGet("GetDocumentContentType/{papmiNo}/{path}")]
         public async Task<IActionResult> GetDocumentContentTypeByPapmiNoAndPathAsync(string papmiNo, string path)
         {
