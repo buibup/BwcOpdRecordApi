@@ -10,6 +10,11 @@
       ASP.NET Core 2.1
       ODBC Access Database.
       Dapper mapper object. 
+      
+* Deploy to iis <br/>
+
+      1. dotnet publish -c release
+      2. run iisreset on server 
 
 * If publish on Visual Studio not working, Used dotnet command publish
 
