@@ -114,7 +114,7 @@ namespace BwcOpdRecordApi.Data.Services
                 // Group by DocumentTypes
                 foreach (var documentType in documentTypeDist)
                 {
-                    var documentsDocType = documents.Where(d => d.DOCTYPE_Desc == documentType && d.PAADM_ADMNo == epiNo).ToList();
+                    var documentsDocType = documentsResult.Where(d => d.DOCTYPE_Desc == documentType && d.PAADM_ADMNo == epiNo).ToList();
 
                     var model = new DocumentType()
                     {
