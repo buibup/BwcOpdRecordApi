@@ -154,5 +154,15 @@ namespace BwcOpdRecordApi.Controllers
 
             return Ok(data.ContentType);
         }
+
+        [HttpGet("GetDocumentFilterByEpiRowId/{epiRowId}")]
+        public async Task<IActionResult> GetDocumentVMByEpiRowIdAsync(long epiRowId)
+        {
+            var data = await _medicalRecordService.GetDocumentVMByEpiRowIdAsync(epiRowId);
+
+            if (data == null) { return NotFound(); }
+
+            return Ok(data);
+        }
     }
 }

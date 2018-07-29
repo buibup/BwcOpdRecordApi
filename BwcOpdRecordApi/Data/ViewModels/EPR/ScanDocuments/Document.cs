@@ -43,5 +43,11 @@ namespace BwcOpdRecordApi.Data.ViewModels.EPR.ScanDocuments
 
         [JsonProperty(PropertyName = "DocumentType")]
         public string DOCTYPE_Desc { get; set; }
+
+        [JsonProperty(PropertyName = "ContentType")]
+        public string ContentType { get; set; }
+
+        [JsonProperty(PropertyName = "DocumentUrl")]
+        public string DocumentUrl { get; set; }
     }
 }

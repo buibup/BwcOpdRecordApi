@@ -2,6 +2,7 @@
 using BwcOpdRecordApi.Data.Interfaces.Services;
 using BwcOpdRecordApi.Data.ViewModels.EPR.ScanDocuments;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,11 +15,15 @@ namespace BwcOpdRecordApi.Data.Services
     {
         private readonly IMedicalRecordRepository _medicalRecordRepository;
         private readonly ICodeTablesRepository _codeTablesRepository;
+        private readonly IConfiguration _configuration;
         public MedicalRecordService(IMedicalRecordRepository medicalRecordRepository,
-            ICodeTablesRepository codeTablesRepository)
+            ICodeTablesRepository codeTablesRepository,
+            IConfiguration configuration
+            )
         {
             _medicalRecordRepository = medicalRecordRepository;
             _codeTablesRepository = codeTablesRepository;
+            _configuration = configuration;
         }
 
         public async Task<DocumentResult> GetDocumentBinaryByPapmiNoAndPathAsync(string papmiNo, string path, bool isFileStreamResult)
@@ -44,6 +49,92 @@ namespace BwcOpdRecordApi.Data.Services
                 FileStreamResult = fileStreamResult
             };
 
+            return result;
+        }
+
+        public async Task<DocumentViewModel> GetDocumentVMByEpiRowIdAsync(long epiRowId)
+        {
+            var documents = await _medicalRecordRepository.GetDocumentsByEpiRowIdAsync(epiRowId);
+            var hn = documents.DistinctBy(d => d.PAPMI_No).Select(e => e.PAPMI_No).FirstOrDefault();
+            var epiNo = documents.DistinctBy(d => d.PAADM_ADMNo).Select(e => e.PAADM_ADMNo).FirstOrDefault();
+            var documentsResult = new List<Document>();
+
+            foreach (var item in documents)
+            {
+                var contentType = await GetDocumentBinaryByPapmiNoAndPathAsync(hn, item.PIC_Path, false);
+                var docUrl = $"{_configuration["Settings:BaseUrl"]}api/OpdRecord/GetDocument/{hn}/{item.PIC_Path}";
+                var doc = new Document()
+                {
+                    PAPMI_No = item.PAPMI_No,
+                    PAADM_RowID = item.PAADM_RowID,
+                    PAADM_ADMNo = item.PAADM_ADMNo,
+                    PIC_DateCreated = item.PIC_DateCreated,
+                    PIC_TimeCreated = item.PIC_TimeCreated,
+                    SADST_Code = item.SADST_Code,
+                    SADST_Desc = item.SADST_Desc,
+                    DOCTYPE_Desc = item.DOCTYPE_Desc,
+                    DocumentBinary = item.DocumentBinary,
+                    PIC_Path = item.PIC_Path,
+                    PIC_Desc = item.PIC_Desc,
+                    ContentType = contentType.ContentType,
+                    DocumentUrl = docUrl
+                };
+
+                documentsResult.Add(doc);
+            }
+
+            var doctors = new List<Doctor>();
+            var documentTypes = new List<DocumentType>();
+
+            var documentSubTypesDist = documents.Where(d => d.PAADM_ADMNo == epiNo).DistinctBy(d => d.SADST_Code).Select(d => new { d.SADST_Code, d.SADST_Desc });
+
+            if (documentSubTypesDist.ToList().Count > 0)
+            {
+                // Group by Doctor
+                foreach (var documentSubType in documentSubTypesDist)
+                {
+                    if (_codeTablesRepository.IsDoctor(documentSubType.SADST_Code))
+                    {
+                        var documentsDoctor = documentsResult.Where(d => d.SADST_Code == documentSubType.SADST_Code && d.PAADM_ADMNo == epiNo).ToList();
+                        var doctor = new Doctor()
+                        {
+                            Name = documentSubType.SADST_Desc,
+                            Documents = documentsDoctor
+                        };
+
+                        doctors.Add(doctor);
+                    }
+                }
+            }
+
+            var documentTypeDist = documentsResult.Where(d => d.PAADM_ADMNo == epiNo).DistinctBy(d => d.DOCTYPE_Desc).Select(d => d.DOCTYPE_Desc);
+
+            if (documentTypeDist.ToList().Count > 0)
+            {
+                // Group by DocumentTypes
+                foreach (var documentType in documentTypeDist)
+                {
+                    var documentsDocType = documents.Where(d => d.DOCTYPE_Desc == documentType && d.PAADM_ADMNo == epiNo).ToList();
+
+                    var model = new DocumentType()
+                    {
+                        Name = documentType,
+                        Documents = documentsDocType
+                    };
+
+                    documentTypes.Add(model);
+                }
+            }
+
+            var documentsEpi = documentsResult.Where(d => d.PAADM_ADMNo == epiNo).ToList();
+
+            var result = new DocumentViewModel()
+            {
+                PAADM_ADMNo = epiNo,
+                Doctors = doctors,
+                DocumentTypes = documentTypes,
+                Documents = documentsEpi
+            };
             return result;
         }
 

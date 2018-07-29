@@ -13,6 +13,8 @@ namespace BwcOpdRecordApi.Data.Repositories
     public class MedicalRecordRepository : IMedicalRecordRepository
     {
         private readonly ConnectionStrings _connectionStrings;
+        
+
         public MedicalRecordRepository(ConnectionStrings connectionStrings)
         {
             _connectionStrings = connectionStrings;
