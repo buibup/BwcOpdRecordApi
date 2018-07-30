@@ -20,7 +20,8 @@ namespace BwcOpdRecordApi.Data.Queries
 	                MR_Pictures->PIC_DocSubType_DR->SADST_Desc,	
 	                MR_Pictures->PIC_Path,
 	                MR_Pictures->PIC_Desc,
-	                MR_Pictures->PIC_DocType_DR->DOCTYPE_Desc
+	                MR_Pictures->PIC_DocType_DR->DOCTYPE_Desc,
+                    MR_Pictures->PIC_websysDocument->docType DocType
                 FROM MR_Adm
                 WHERE MRADM_ADM_DR->PAADM_PAPMI_DR->PAPMI_RowId1 = ?
                 AND MR_Pictures->PIC_RowId <> ''
@@ -40,7 +41,8 @@ namespace BwcOpdRecordApi.Data.Queries
 	                MR_Pictures->PIC_DocSubType_DR->SADST_Desc,	
 	                MR_Pictures->PIC_Path,
 	                MR_Pictures->PIC_Desc,
-	                MR_Pictures->PIC_DocType_DR->DOCTYPE_Desc
+	                MR_Pictures->PIC_DocType_DR->DOCTYPE_Desc,
+                    MR_Pictures->PIC_websysDocument->docType DocType
                 FROM MR_Adm
                 WHERE MRADM_ADM_DR->PAADM_RowID = ?
                 AND MR_Pictures->PIC_RowId <> ''

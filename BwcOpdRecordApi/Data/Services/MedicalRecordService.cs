@@ -31,7 +31,7 @@ namespace BwcOpdRecordApi.Data.Services
             var data = await _medicalRecordRepository.GetDocumentBinaryByPapmiNoAndPathAsync(papmiNo, path, isFileStreamResult);
             string contentType = data.DocType.GetContentTypeByDocType();
 
-            if(!isFileStreamResult)
+            if (!isFileStreamResult)
             {
                 return new DocumentResult()
                 {
@@ -77,7 +77,9 @@ namespace BwcOpdRecordApi.Data.Services
                     PIC_Path = item.PIC_Path,
                     PIC_Desc = item.PIC_Desc,
                     ContentType = contentType.ContentType,
-                    DocumentUrl = docUrl
+                    DocumentUrl = docUrl,
+                    DocType = item.DocType,
+                    IsPdf = item.DocType.ToLower() == "pdf" ? true : false
                 };
 
                 documentsResult.Add(doc);
@@ -141,19 +143,19 @@ namespace BwcOpdRecordApi.Data.Services
         public async Task<IEnumerable<DocumentViewModel>> GetDocumentsVMByPapmiRowIdAsync(long papmiRowId)
         {
             var result = new List<DocumentViewModel>();
-            
+
             var documents = await _medicalRecordRepository.GetDocumentsByPapmiRowIdAsync(papmiRowId);
 
             var epiDist = documents.DistinctBy(d => d.PAADM_ADMNo).Select(e => e.PAADM_ADMNo);
 
-            foreach(var epi in epiDist)
+            foreach (var epi in epiDist)
             {
                 var doctors = new List<Doctor>();
                 var documentTypes = new List<DocumentType>();
 
                 var documentSubTypesDist = documents.Where(d => d.PAADM_ADMNo == epi).DistinctBy(d => d.SADST_Code).Select(d => new { d.SADST_Code, d.SADST_Desc });
 
-                if(documentSubTypesDist.ToList().Count > 0)
+                if (documentSubTypesDist.ToList().Count > 0)
                 {
                     // Group by Doctor
                     foreach (var documentSubType in documentSubTypesDist)
@@ -174,7 +176,7 @@ namespace BwcOpdRecordApi.Data.Services
 
                 var documentTypeDist = documents.Where(d => d.PAADM_ADMNo == epi).DistinctBy(d => d.DOCTYPE_Desc).Select(d => d.DOCTYPE_Desc);
 
-                if(documentTypeDist.ToList().Count > 0)
+                if (documentTypeDist.ToList().Count > 0)
                 {
                     // Group by DocumentTypes
                     foreach (var documentType in documentTypeDist)
