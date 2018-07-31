@@ -55,5 +55,8 @@ namespace BwcOpdRecordApi.Data.ViewModels.EPR.ScanDocuments
 
         [JsonProperty(PropertyName = "IsPdf")]
         public bool IsPdf { get; set; }
+
+        [JsonProperty(PropertyName = "IsOpen")]
+        public bool IsOpen { get; set; } = false;
     }
 }
