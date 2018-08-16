@@ -35,7 +35,8 @@ namespace BwcOpdRecordApi.Data.Queries
                 PAADM_DischgTime,
                 PAADM_Remark
             FROM PA_Adm
-            WHERE PAADM_PAPMI_DR = ? ";
+            WHERE PAADM_PAPMI_DR = ? 
+            AND PAADM_VisitStatus <> 'C' ";
         }
 
         public static string GetPersonByPapmiRowId()
