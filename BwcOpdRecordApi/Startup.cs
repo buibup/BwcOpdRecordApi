@@ -1,7 +1,9 @@
 ﻿using BwcOpdRecordApi.Data;
 using BwcOpdRecordApi.Data.Interfaces.Repositories;
+using BwcOpdRecordApi.Data.Interfaces.Repositories.SqlServer;
 using BwcOpdRecordApi.Data.Interfaces.Services;
 using BwcOpdRecordApi.Data.Repositories;
+using BwcOpdRecordApi.Data.Repositories.SqlServer;
 using BwcOpdRecordApi.Data.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,6 +36,7 @@ namespace BwcOpdRecordApi
             services.AddTransient<IPatientAdmissionRepository, PatientAdmissionRepository>();
             services.AddTransient<IMedicalRecordRepository, MedicalRecordRepository>();
             services.AddTransient<ICodeTablesRepository, CodeTablesRepository>();
+            services.AddTransient<IConsentFormRepository, ConsentFormRepository>();
 
             // services
             services.AddTransient<IVitalSignsService, VitalSignsService>();
@@ -44,6 +47,7 @@ namespace BwcOpdRecordApi
             services.AddTransient<IEprService, EprService>();
             services.AddTransient<IPatientInfoService, PatientInfoService>();
             services.AddTransient<IMedicalRecordService, MedicalRecordService>();
+            services.AddTransient<IConsentFormService, ConsentFormService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

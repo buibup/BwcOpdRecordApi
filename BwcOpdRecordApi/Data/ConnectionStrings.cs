@@ -8,5 +8,6 @@ namespace BwcOpdRecordApi.Data
     public class ConnectionStrings
     {
         public string Cache { get; set; }
+        public string ConsentDb { get; set; }
     }
 }
