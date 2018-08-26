@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BwcOpdRecordApi.Data.ViewModels.EPR.ScanDocuments;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,9 @@ namespace BwcOpdRecordApi.Data.ViewModels.PatientAdmission
 
         [JsonProperty(PropertyName = "EpisodeTree")]
         public List<EpisodeTreeViewModel> EpisodeTree { get; set; }
+
+        [JsonProperty(PropertyName = "DocumentsTypesFilter")]
+        public List<DocumentType> DocumentTypesFilter { get; set; }
     }
 
     public class PatientInfo

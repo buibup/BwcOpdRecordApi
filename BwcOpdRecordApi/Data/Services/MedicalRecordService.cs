@@ -207,5 +207,27 @@ namespace BwcOpdRecordApi.Data.Services
 
             return result;
         }
+
+        public async Task<IEnumerable<DocumentType>> GetDocumentTypesFilterAsync(long papmiRowId)
+        {
+            var result = new List<DocumentType>();
+
+            var documents = await _medicalRecordRepository.GetDocumentsByPapmiRowIdAsync(papmiRowId);
+            var documentsDocTypeDistList = documents.Select(d => d.DOCTYPE_Desc).Distinct().ToList();
+
+            foreach(var item in documentsDocTypeDistList)
+            {
+                var docs = documents.Where(dc => dc.DOCTYPE_Desc == item).ToList();
+                var model = new DocumentType()
+                {
+                    Name = item,
+                    Documents = docs
+                };
+
+                result.Add(model);
+            }
+
+            return result;
+        }
     }
 }

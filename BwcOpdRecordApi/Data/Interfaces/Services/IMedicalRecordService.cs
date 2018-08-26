@@ -13,5 +13,6 @@ namespace BwcOpdRecordApi.Data.Interfaces.Services
         Task<DocumentResult> GetDocumentBinaryByPapmiNoAndPathAsync(string papmiNo, string path, bool isFileStreamResult);
         Task<IEnumerable<DocumentViewModel>> GetDocumentsVMByPapmiRowIdAsync(long papmiRowId);
         Task<DocumentViewModel> GetDocumentVMByEpiRowIdAsync(long epiRowId);
+        Task<IEnumerable<DocumentType>> GetDocumentTypesFilterAsync(long papmiRowId);
     }
 }
