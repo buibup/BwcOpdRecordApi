@@ -39,8 +39,8 @@ namespace BwcOpdRecordApi.Data.Services
 
             var person = await _patientAdmissionRepository.GetPersonByPapmiRowIdAsync(patient.PAPMI_RowId1);
             var ptAdms = await _patientAdmissionRepository.GetPatientAdmissionsByPapmiRowIdAsync(patient.PAPMI_RowId1);
-            var doucmentFilter = (await _medicalRecordService.GetDocumentsVMByPapmiRowIdAsync(patient.PAPMI_RowId1)).ToList();
-            var docsTypeFilter = (await _medicalRecordService.GetDocumentTypesFilterAsync(patient.PAPMI_RowId1)).ToList();
+            var documentVMs = (await _medicalRecordService.GetDocumentsVMByPapmiRowIdAsync(patient.PAPMI_RowId1)).ToList();
+            var documentFilters = (await _medicalRecordService.GetDocumentTypesFilterAsync(patient.PAPMI_RowId1)).ToList();
 
             var patientInfo = new PatientInfo()
             {
@@ -68,7 +68,7 @@ namespace BwcOpdRecordApi.Data.Services
                 }
 
                 // var documentsEpi = scanDocuments.Where(d => d.PAADM_RowID == item.PAADM_RowID).ToList();
-                var doucmentsFilterEpi = doucmentFilter.Where(d => d.PAADM_ADMNo == item.PAADM_ADMNo).FirstOrDefault();
+                var doucmentsFilterEpi = documentVMs.Where(d => d.PAADM_ADMNo == item.PAADM_ADMNo).FirstOrDefault();
                 
 
                 var episodeTree = new EpisodeTreeViewModel()
@@ -99,7 +99,7 @@ namespace BwcOpdRecordApi.Data.Services
             {
                 PatientInfo = patientInfo,
                 EpisodeTree = episodes,
-                DocumentTypesFilter = docsTypeFilter
+                DocumentFilters = documentFilters
             };
 
             return result;
