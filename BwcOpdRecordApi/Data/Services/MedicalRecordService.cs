@@ -208,9 +208,8 @@ namespace BwcOpdRecordApi.Data.Services
             return result;
         }
 
-        public async Task<IEnumerable<DocumentFilter>> GetDocumentFilterAsync(long papmiRowId)
+        public async Task<DocumentFilter> GetDocumentFilterAsync(long papmiRowId)
         {
-            var result = new List<DocumentFilter>();
             var typeFilters = new List<TypeFilter>();
 
             var documents = await _medicalRecordRepository.GetDocumentsByPapmiRowIdAsync(papmiRowId);
@@ -234,9 +233,7 @@ namespace BwcOpdRecordApi.Data.Services
                 TypeFilters = typeFilters
             };
 
-            result.Add(documenFilter);
-
-            return result;
+            return documenFilter;
         }
     }
 }
