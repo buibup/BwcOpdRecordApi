@@ -40,7 +40,7 @@ namespace BwcOpdRecordApi.Data.Services
             var person = await _patientAdmissionRepository.GetPersonByPapmiRowIdAsync(patient.PAPMI_RowId1);
             var ptAdms = await _patientAdmissionRepository.GetPatientAdmissionsByPapmiRowIdAsync(patient.PAPMI_RowId1);
             var documentVMs = (await _medicalRecordService.GetDocumentsVMByPapmiRowIdAsync(patient.PAPMI_RowId1)).ToList();
-            var documentFilters = (await _medicalRecordService.GetDocumentTypesFilterAsync(patient.PAPMI_RowId1)).ToList();
+            //var documentFilters = (await _medicalRecordService.GetDocumentFilterAsync(patient.PAPMI_RowId1)).ToList();
 
             var patientInfo = new PatientInfo()
             {
@@ -99,7 +99,6 @@ namespace BwcOpdRecordApi.Data.Services
             {
                 PatientInfo = patientInfo,
                 EpisodeTree = episodes,
-                DocumentFilters = documentFilters
             };
 
             return result;

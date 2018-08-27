@@ -208,7 +208,7 @@ namespace BwcOpdRecordApi.Data.Services
             return result;
         }
 
-        public async Task<IEnumerable<DocumentFilter>> GetDocumentTypesFilterAsync(long papmiRowId)
+        public async Task<IEnumerable<DocumentFilter>> GetDocumentFilterAsync(long papmiRowId)
         {
             var result = new List<DocumentFilter>();
             var typeFilters = new List<TypeFilter>();

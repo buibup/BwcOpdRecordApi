@@ -164,5 +164,15 @@ namespace BwcOpdRecordApi.Controllers
 
             return Ok(data);
         }
+
+        [HttpGet("GetDocumentFilter/{papmiRowId}")]
+        public async Task<IActionResult> GetDocumentFilterAsync(long papmiRowId)
+        {
+            var data = await _medicalRecordService.GetDocumentFilterAsync(papmiRowId);
+
+            if (data == null) return NotFound();
+
+            return Ok(data);
+        }
     }
 }

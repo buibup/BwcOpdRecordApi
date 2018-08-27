@@ -15,8 +15,8 @@ namespace BwcOpdRecordApi.Data.ViewModels.PatientAdmission
         [JsonProperty(PropertyName = "EpisodeTree")]
         public List<EpisodeTreeViewModel> EpisodeTree { get; set; }
 
-        [JsonProperty(PropertyName = "DocumentFilters")]
-        public List<DocumentFilter> DocumentFilters { get; set; }
+        //[JsonProperty(PropertyName = "DocumentFilters")]
+        //public List<DocumentFilter> DocumentFilters { get; set; }
     }
 
     public class PatientInfo
