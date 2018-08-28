@@ -16,7 +16,7 @@ namespace BwcOpdRecordApi.Data
 
     public enum DoctorPanelEnum
     {
-        InActice,
+        InActive,
         Active
     }
 

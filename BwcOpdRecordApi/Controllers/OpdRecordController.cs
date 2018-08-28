@@ -129,7 +129,7 @@ namespace BwcOpdRecordApi.Controllers
             }
             else
             {
-                result = await _patientInfoService.GetPatientInfoByPapmiNoAsync(papmiNo, DoctorPanelEnum.InActice);
+                result = await _patientInfoService.GetPatientInfoByPapmiNoAsync(papmiNo, DoctorPanelEnum.InActive);
             }
 
             if (result == null) return NotFound();
