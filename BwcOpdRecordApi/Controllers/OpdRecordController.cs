@@ -33,14 +33,14 @@ namespace BwcOpdRecordApi.Controllers
             IPatientInfoService patientInfoService,
             IMedicalRecordService medicalRecordService)
         {
-            _vitalSignsService = vitalSignsService;
-            _physicalExamService = physicalExamService;
-            _dietService = dietService;
-            _exerciseService = exerciseService;
-            _treatmentService = treatmentService;
-            _eprService = eprService;
-            _patientInfoService = patientInfoService;
-            _medicalRecordService = medicalRecordService;
+            _vitalSignsService = vitalSignsService ?? throw new ArgumentNullException(nameof(vitalSignsService));
+            _physicalExamService = physicalExamService ?? throw new ArgumentNullException(nameof(physicalExamService));
+            _dietService = dietService ?? throw new ArgumentNullException(nameof(dietService));
+            _exerciseService = exerciseService ?? throw new ArgumentNullException(nameof(exerciseService));
+            _treatmentService = treatmentService ?? throw new ArgumentNullException(nameof(treatmentService));
+            _eprService = eprService ?? throw new ArgumentNullException(nameof(eprService));
+            _patientInfoService = patientInfoService ?? throw new ArgumentNullException(nameof(patientInfoService));
+            _medicalRecordService = medicalRecordService ?? throw new ArgumentNullException(nameof(medicalRecordService));
         }
 
         [HttpGet("GetVitalSignsByEpiNo/{epiNo}")]
