@@ -211,11 +211,13 @@ namespace BwcOpdRecordApi.Data.Services
         public async Task<DocumentFilter> GetDocumentFilterAsync(long papmiRowId)
         {
             var typeFilters = new List<TypeFilter>();
+            var doctorFilters = new List<DoctorFilter>();
 
             var documents = await _medicalRecordRepository.GetDocumentsByPapmiRowIdAsync(papmiRowId);
-            var documentsDocTypeDistList = documents.Select(d => d.DOCTYPE_Desc).Distinct().OrderBy(d => d).ToList();
 
-            foreach(var item in documentsDocTypeDistList)
+            #region type filter
+            var documentsDocTypeDistList = documents.Select(d => d.DOCTYPE_Desc).Distinct().OrderBy(d => d).ToList();
+            foreach (var item in documentsDocTypeDistList)
             {
                 var docs = documents.Where(dc => dc.DOCTYPE_Desc == item).ToList();
 
@@ -227,10 +229,47 @@ namespace BwcOpdRecordApi.Data.Services
 
                 typeFilters.Add(typeFilter);
             }
+            #endregion
+
+            #region doctor filter
+            var doctorDiscList = documents.Select(d => new { d.SADST_Code, d.SADST_Desc }).Distinct().OrderBy(d => d.SADST_Desc).ToList();
+            foreach (var item in doctorDiscList)
+            {
+                if (_codeTablesRepository.IsDoctor(item.SADST_Code))
+                {
+                    var typeFiltersDr = new List<TypeFilter>();
+                    // documents of doctor
+                    var docs = documents.Where(dc => dc.SADST_Code == item.SADST_Code).ToList();
+
+                    // documents type of doctor
+                    var docsTypeDiscFilter = docs.Select(d => d.DOCTYPE_Desc).Distinct().OrderBy(d => d).ToList();
+                    foreach (var docType in docsTypeDiscFilter)
+                    {
+                        var docsTypeOfDr = docs.Where(dc => dc.DOCTYPE_Desc == docType).ToList();
+                        var typeFilter = new TypeFilter
+                        {
+                            TypeName = docType,
+                            Documents = docsTypeOfDr
+                        };
+
+                        typeFiltersDr.Add(typeFilter);
+                    }
+
+                    var doctorFilter = new DoctorFilter
+                    {
+                        Name = item.SADST_Desc,
+                        TypeFilters = typeFiltersDr
+                    };
+
+                    doctorFilters.Add(doctorFilter);
+                }
+            }
+            #endregion
 
             var documenFilter = new DocumentFilter()
             {
-                TypeFilters = typeFilters
+                TypeFilters = typeFilters,
+                DoctorFilters = doctorFilters
             };
 
             return documenFilter;

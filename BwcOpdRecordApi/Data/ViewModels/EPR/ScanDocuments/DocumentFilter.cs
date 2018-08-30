@@ -10,6 +10,9 @@ namespace BwcOpdRecordApi.Data.ViewModels.EPR.ScanDocuments
     {
         [JsonProperty(PropertyName = "TypeFilters")]
         public List<TypeFilter> TypeFilters { get; set; }
+
+        [JsonProperty(PropertyName = "DoctorFilters")]
+        public List<DoctorFilter> DoctorFilters { get; set; }
     }
 
     public class TypeFilter
@@ -19,5 +22,14 @@ namespace BwcOpdRecordApi.Data.ViewModels.EPR.ScanDocuments
 
         [JsonProperty(PropertyName = "Documents")]
         public List<Document> Documents { get; set; }
+    }
+
+    public class DoctorFilter
+    {
+        [JsonProperty(PropertyName = "DoctorName")]
+        public string Name { get; set; }
+
+        [JsonProperty(PropertyName = "TypeFilters")]
+        public List<TypeFilter> TypeFilters { get; set; }
     }
 }

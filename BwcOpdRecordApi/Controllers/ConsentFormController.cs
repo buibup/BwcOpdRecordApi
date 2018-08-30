@@ -15,7 +15,7 @@ namespace BwcOpdRecordApi.Controllers
         private readonly IConsentFormService _consentFormService;
         public ConsentFormController(IConsentFormService consentFormService)
         {
-            _consentFormService = consentFormService;
+            _consentFormService = consentFormService ?? throw new ArgumentNullException(nameof(consentFormService));
         }
 
         [HttpGet("GetCustomerAgrees/{papmiRowId}")]
