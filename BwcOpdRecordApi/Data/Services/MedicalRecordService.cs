@@ -208,12 +208,17 @@ namespace BwcOpdRecordApi.Data.Services
             return result;
         }
 
-        public async Task<DocumentFilter> GetDocumentFilterAsync(long papmiRowId)
+        public async Task<DocumentFilter> GetDocumentFilterAsync(long papmiRowId, string searchDoctor)
         {
             var typeFilters = new List<TypeFilter>();
             var doctorFilters = new List<DoctorFilter>();
+            var documents = new List<Document>();
 
-            var documents = await _medicalRecordRepository.GetDocumentsByPapmiRowIdAsync(papmiRowId);
+            documents = (await _medicalRecordRepository.GetDocumentsByPapmiRowIdAsync(papmiRowId)).ToList();
+            if (!string.IsNullOrEmpty(searchDoctor) && documents.Count > 0)
+            {
+                documents = documents.Where(d => d.SADST_Desc.ToLower().Contains(searchDoctor.ToLower())).ToList();
+            }
 
             #region type filter
             var documentsDocTypeDistList = documents.Select(d => d.DOCTYPE_Desc).Distinct().OrderBy(d => d).ToList();

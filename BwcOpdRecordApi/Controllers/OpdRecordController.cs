@@ -166,9 +166,10 @@ namespace BwcOpdRecordApi.Controllers
         }
 
         [HttpGet("GetDocumentFilter/{papmiRowId}")]
-        public async Task<IActionResult> GetDocumentFilterAsync(long papmiRowId)
+        [HttpGet("GetDocumentFilter/{papmiRowId}/{searchDoctor}")]
+        public async Task<IActionResult> GetDocumentFilterAsync(long papmiRowId, string searchDoctor = "")
         {
-            var data = await _medicalRecordService.GetDocumentFilterAsync(papmiRowId);
+            var data = await _medicalRecordService.GetDocumentFilterAsync(papmiRowId, searchDoctor);
 
             if (data == null) return NotFound();
 
